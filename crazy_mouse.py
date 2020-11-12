@@ -23,17 +23,25 @@ import pyautogui
 import random
 import time
 
-screen_width = pyautogui.size().width
-screen_height = pyautogui.size().height
+screen_width = int(pyautogui.size().width/2)
+screen_height = int(pyautogui.size().height/2)
 
 original_x = pyautogui.position().x
 original_y = pyautogui.position().y
 iteration = 1
-while True:
-    new_x = random.randint(0, screen_width)
-    new_y = random.randint(0, screen_height)
+print("{}.Current Position: {}, New Position: x={}, y={}".format(
+            iteration, pyautogui.position(), original_x, original_y))
+try:
+    while True:
+        new_x = random.randint(screen_width, screen_width+10)
+        new_y = random.randint(screen_height, screen_height+10)
+        pyautogui.moveTo(new_x, new_y)
+        iteration += 1
+        print("{}.Current Position: {}, New Position: x={}, y={}".format(
+            iteration, pyautogui.position(), new_x, new_y))
+        time.sleep(5)
+except KeyboardInterrupt:
     print("{}.Current Position: {}, New Position: x={}, y={}".format(
-        iteration, pyautogui.position(), new_x, new_y))
-    pyautogui.moveTo(new_x, new_y)
-    iteration += 1
-    time.sleep(5)
+            iteration, pyautogui.position(), original_x, original_y))
+    pyautogui.moveTo(original_x, original_y)
+    exit(0)
